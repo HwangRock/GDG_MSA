@@ -12,12 +12,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Java JDK 17
+      - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           java-version: 17
           distribution: 'temurin'
-          cache: 'gradle'
 
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
@@ -27,6 +26,12 @@ jobs:
           ./gradlew :user:build
           ./gradlew :post:build
           ./gradlew :notification:build
+
+      - name: Copy JARs to Docker context
+        run: |
+          cp ./user/build/libs/user-0.0.1-SNAPSHOT.jar ./user/
+          cp ./post/build/libs/post-0.0.1-SNAPSHOT.jar ./post/
+          cp ./notification/build/libs/notification-0.0.1-SNAPSHOT.jar ./notification/
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
@@ -40,21 +45,21 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build and push user-service
+      - name: Build and Push user-service
         uses: docker/build-push-action@v5
         with:
           context: ./user
           push: true
           tags: hwangrock/user-service:latest
 
-      - name: Build and push post-service
+      - name: Build and Push post-service
         uses: docker/build-push-action@v5
         with:
           context: ./post
           push: true
           tags: hwangrock/post-service:latest
 
-      - name: Build and push notification-service
+      - name: Build and Push notification-service
         uses: docker/build-push-action@v5
         with:
           context: ./notification
