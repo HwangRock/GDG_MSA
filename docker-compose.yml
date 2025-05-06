@@ -1,10 +1,20 @@
 services:
+  eureka-server:
+    image: hwangrock/eureka-server:latest
+    container_name: eureka-server
+    ports:
+      - "8761:8761"
+    networks:
+      - msa-network
+
   user-service:
     image: hwangrock/user-service:latest
     container_name: user-service
     ports:
       - "8081:8081"
     restart: always
+    depends_on:
+      - eureka-server
     networks:
       - msa-network
 
@@ -15,7 +25,7 @@ services:
       - "8082:8082"
     restart: always
     depends_on:
-      - user-service
+      - eureka-server
     networks:
       - msa-network
 
@@ -26,11 +36,9 @@ services:
       - "8083:8083"
     restart: always
     depends_on:
-      - user-service
-      - post-service
+      - eureka-server
     networks:
       - msa-network
-
 
 networks:
   msa-network:
