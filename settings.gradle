@@ -2,3 +2,4 @@ rootProject.name = 'GDG_MSA'
 include('user')
 include('post')
 include('notification')
+include('eureka-server')

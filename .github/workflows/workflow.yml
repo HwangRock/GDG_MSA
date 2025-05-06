@@ -26,12 +26,14 @@ jobs:
           ./gradlew :user:build
           ./gradlew :post:build
           ./gradlew :notification:build
+          ./gradlew :eureka:build
 
       - name: Copy JARs to Docker context
         run: |
           cp ./user/build/libs/user-0.0.1-SNAPSHOT.jar ./user/
           cp ./post/build/libs/post-0.0.1-SNAPSHOT.jar ./post/
           cp ./notification/build/libs/notification-0.0.1-SNAPSHOT.jar ./notification/
+          cp ./eureka/build/libs/eureka-server-0.0.1-SNAPSHOT.jar ./eureka/
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
@@ -65,3 +67,10 @@ jobs:
           context: ./notification
           push: true
           tags: hwangrock/notification-service:latest
+
+      - name: Build and push eureka-server image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./eureka
+          push: true
+          tags: hwangrock/eureka-server:latest
