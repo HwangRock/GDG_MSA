@@ -40,6 +40,17 @@ services:
     networks:
       - msa-network
 
+  api-gateway:
+    image: hwangrock/api-gateway:latest
+    container_name: api-gateway
+    ports:
+      - "8084:8084"
+    restart: always
+    depends_on:
+      - eureka-server
+    networks:
+      - msa-network
+
 networks:
   msa-network:
     driver: bridge
