@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/notification/GDG_MSA.notification.main.iml" filepath="$PROJECT_DIR$/.idea/modules/notification/GDG_MSA.notification.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/post/GDG_MSA.post.main.iml" filepath="$PROJECT_DIR$/.idea/modules/post/GDG_MSA.post.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/user/GDG_MSA.user.main.iml" filepath="$PROJECT_DIR$/.idea/modules/user/GDG_MSA.user.main.iml" />
     </modules>
