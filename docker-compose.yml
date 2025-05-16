@@ -68,6 +68,9 @@ services:
       - eureka-server
     networks:
       - msa-network
+  
+volumes:
+  mysql_data:
 
 networks:
   msa-network:
