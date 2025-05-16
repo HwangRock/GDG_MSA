@@ -16,7 +16,7 @@ services:
       MYSQL_USER: hwangrock          # spring cloud config에
       MYSQL_PASSWORD: abc1234         # 보관해야함
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
       - mysql_data:/var/lib/mysql
     networks:
@@ -68,7 +68,7 @@ services:
       - eureka-server
     networks:
       - msa-network
-  
+
 volumes:
   mysql_data:
 
