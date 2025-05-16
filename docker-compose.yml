@@ -7,6 +7,21 @@ services:
     networks:
       - msa-network
 
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: abc123  # 이 놈들은
+      MYSQL_DATABASE: msa          # 나중에
+      MYSQL_USER: hwangrock          # spring cloud config에
+      MYSQL_PASSWORD: abc1234         # 보관해야함
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - msa-network
+
   user-service:
     image: hwangrock/user-service:latest
     container_name: user-service
@@ -15,6 +30,7 @@ services:
     restart: always
     depends_on:
       - eureka-server
+      - mysql
     networks:
       - msa-network
 
@@ -26,6 +42,7 @@ services:
     restart: always
     depends_on:
       - eureka-server
+      - mysql
     networks:
       - msa-network
 
@@ -37,6 +54,7 @@ services:
     restart: always
     depends_on:
       - eureka-server
+      - mysql
     networks:
       - msa-network
 
