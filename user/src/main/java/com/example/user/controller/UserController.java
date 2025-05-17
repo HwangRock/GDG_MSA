@@ -1,5 +1,6 @@
 package com.example.user.controller;
 
+import com.example.user.dto.LoginRequestDTO;
 import com.example.user.dto.RegisterRequestDTO;
 import com.example.user.model.UserEntity;
 import com.example.user.service.UserService;
@@ -25,6 +26,15 @@ public class UserController {
 
         return ResponseEntity.ok(
                 result
+        );
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> userLogin(@RequestBody LoginRequestDTO request){
+        String accessToken=userService.tokenProvider(request);
+
+        return ResponseEntity.ok(
+                accessToken
         );
     }
 }

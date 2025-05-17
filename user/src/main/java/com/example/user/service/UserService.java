@@ -1,5 +1,6 @@
 package com.example.user.service;
 
+import com.example.user.dto.LoginRequestDTO;
 import com.example.user.dto.RegisterRequestDTO;
 import com.example.user.model.UserEntity;
 import com.example.user.repository.UserRepository;
@@ -9,6 +10,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @Slf4j
 public class UserService {
@@ -17,6 +20,9 @@ public class UserService {
     private UserRepository userRepository;
 
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+    @Autowired
+    private JwtProvider jwtProvider;
 
     public UserEntity userRegister(RegisterRequestDTO request){
         String id=request.getUserid();
@@ -40,6 +46,27 @@ public class UserService {
                 .build();
 
         return userRepository.save(entity);
+    }
+
+    public String tokenProvider(LoginRequestDTO request){
+        String id=request.getUserid();
+        String pw=request.getPassword();
+
+        Optional<UserEntity> wantUser=userRepository.findByUserid(id);
+        if(wantUser.isEmpty()){
+            throw new RuntimeException("ID나 비밀번호를 다시 확인해주세요.");
+        }
+
+        if(!passwordEncoder.matches(pw,wantUser.get().getPassword())){
+            throw new RuntimeException("ID나 비밀번호를 다시 확인해주세요.");
+        }
+
+
+        String userName=wantUser.get().getUsername();
+
+        String accessToken= jwtProvider.createAccessToken(userName);
+
+        return accessToken;
     }
 
 }
