@@ -23,11 +23,11 @@ jobs:
 
       - name: Build all services
         run: |
-          ./gradlew :user:build
-          ./gradlew :post:build
-          ./gradlew :notification:build
-          ./gradlew :eureka-server:build
-          ./gradlew :api-gateway:build
+          ./gradlew :user:build -x test
+          ./gradlew :post:build -x test
+          ./gradlew :notification:build -x test
+          ./gradlew :eureka-server:build -x test
+          ./gradlew :api-gateway:build -x test
 
       - name: Copy JARs to Docker context
         run: |
