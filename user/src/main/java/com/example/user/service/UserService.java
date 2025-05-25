@@ -69,4 +69,8 @@ public class UserService {
         return accessToken;
     }
 
+    public UserEntity findByUserId(String userId){
+        return userRepository.findByUserid(userId).get();
+    }
+
 }
