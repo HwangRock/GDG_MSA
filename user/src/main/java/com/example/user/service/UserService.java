@@ -1,6 +1,7 @@
 package com.example.user.service;
 
 import com.example.user.dto.LoginRequestDTO;
+import com.example.user.dto.PostResponseDTO;
 import com.example.user.dto.RegisterRequestDTO;
 import com.example.user.model.UserEntity;
 import com.example.user.repository.UserRepository;
@@ -10,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -23,6 +25,14 @@ public class UserService {
 
     @Autowired
     private JwtProvider jwtProvider;
+
+    @Autowired
+    private PostClient postClient;
+
+    public List<PostResponseDTO> getUserPosts(String userId) {
+        return postClient.getPostsByUserId(userId);
+    }
+
 
     public UserEntity userRegister(RegisterRequestDTO request){
         String id=request.getUserid();

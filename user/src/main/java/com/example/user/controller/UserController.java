@@ -1,6 +1,7 @@
 package com.example.user.controller;
 
 import com.example.user.dto.LoginRequestDTO;
+import com.example.user.dto.PostResponseDTO;
 import com.example.user.dto.RegisterRequestDTO;
 import com.example.user.dto.UserResponseDTO;
 import com.example.user.model.UserEntity;
@@ -10,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @Slf4j
 @RequestMapping("api/user")
@@ -17,6 +20,15 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @GetMapping("/post/{userId}")
+    public ResponseEntity<?> userPost(@PathVariable String userId){
+        List<PostResponseDTO> response=userService.getUserPosts(userId);
+
+        return ResponseEntity.ok(
+                response
+        );
+    }
 
     @PostMapping("/userSignup")
     public ResponseEntity<?> userSignup(@RequestBody RegisterRequestDTO request){
